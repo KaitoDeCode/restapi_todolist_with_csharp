@@ -42,5 +42,15 @@ namespace api_with_csharp.Controllers
             return CreatedAtAction(null,new {id = model.id},model);
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<TodoModel>> Update(int id,TodoModel model)
+        {
+            TodoModel data = ctx.TodoModels.FirstOrDefault(item => item.id == id);
+            data.title = model.title;
+            data.isCompleted = model.isCompleted;
+            await ctx.SaveChangesAsync();
+            return data;
+        }
+
     }
 }
