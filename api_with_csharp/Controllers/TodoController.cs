@@ -8,6 +8,8 @@ using System.Data;
 using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
 using System.Linq;
+using System.ComponentModel;
+using System.Text;
 
 namespace api_with_csharp.Controllers
 {
@@ -50,6 +52,29 @@ namespace api_with_csharp.Controllers
             data.isCompleted = model.isCompleted;
             await ctx.SaveChangesAsync();
             return data;
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var data = await ctx.TodoModels.FirstOrDefaultAsync(item => item.id == id);
+                if (data is null)
+                {
+                    return NotFound();
+                }
+
+                ctx.TodoModels.Remove(data);
+                await ctx.SaveChangesAsync();
+
+                return Ok("Berhasil menghapus data");
+            }
+            catch (Exception err)
+            {
+                // Log kesalahan jika diperlukan
+                return StatusCode(500, "Terjadi kesalahan dalam menghapus data");
+            }
         }
 
     }
