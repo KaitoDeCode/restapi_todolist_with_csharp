@@ -31,6 +31,20 @@ namespace api_with_csharp.Controllers
             return Ok(todos);
         }
 
+        [HttpGet("not-completed")]
+        public async Task<ActionResult<IEnumerable<TodoModel>>> getNotCompleted()
+        {
+            var todos = await ctx.Todo.Where(item => item.isCompleted == false).ToListAsync();
+            return Ok(todos);
+        }
+
+        [HttpGet("completed")]
+        public async Task<ActionResult<IEnumerable<TodoModel>>> getCompleted()
+        {
+            var todos = await ctx.Todo.Where(item => item.isCompleted == true).ToListAsync();
+            return Ok(todos);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoModel>> Show(int id)
         {
@@ -77,6 +91,5 @@ namespace api_with_csharp.Controllers
                 return StatusCode(500, "Terjadi kesalahan dalam menghapus data");
             }
         }
-
     }
 }
