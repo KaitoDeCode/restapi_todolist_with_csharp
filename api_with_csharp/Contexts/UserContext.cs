@@ -5,8 +5,10 @@ namespace api_with_csharp.Contexts
 {
     public class UserContext : DbContext
     {
-        public UserContext(DbContextOptions<UserContext> options): base(options) { 
+        public DbSet<UserModel> User { get; set; } // Hapus inisialisasi null
+
+        public UserContext(DbContextOptions<UserContext> options) : base(options)
+        {
         }
-        public DbSet<UserModel> UserModels { get; set; } = null;
     }
 }

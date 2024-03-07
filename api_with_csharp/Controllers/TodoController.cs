@@ -27,19 +27,20 @@ namespace api_with_csharp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoModel>>> Get()
         {
-            return await ctx.TodoModels.ToListAsync();
+            var todos = await ctx.Todo.ToListAsync();
+            return Ok(todos);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoModel>> Show(int id)
         {
-            return await ctx.TodoModels.FirstOrDefaultAsync(item => item.id == id);
+            return await ctx.Todo.FirstOrDefaultAsync(item => item.id == id);
         }
 
         [HttpPost]
         public async Task<ActionResult<TodoModel>> store(TodoModel model)
         {
-            ctx.TodoModels.Add(model);
+            ctx.Todo.Add(model);
             await ctx.SaveChangesAsync();
             return CreatedAtAction(null,new {id = model.id},model);
         }
@@ -47,7 +48,7 @@ namespace api_with_csharp.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<TodoModel>> Update(int id,TodoModel model)
         {
-            TodoModel data = ctx.TodoModels.FirstOrDefault(item => item.id == id);
+            TodoModel data = ctx.Todo.FirstOrDefault(item => item.id == id);
             data.title = model.title;
             data.isCompleted = model.isCompleted;
             await ctx.SaveChangesAsync();
@@ -59,13 +60,13 @@ namespace api_with_csharp.Controllers
         {
             try
             {
-                var data = await ctx.TodoModels.FirstOrDefaultAsync(item => item.id == id);
+                var data = await ctx.Todo.FirstOrDefaultAsync(item => item.id == id);
                 if (data is null)
                 {
                     return NotFound();
                 }
 
-                ctx.TodoModels.Remove(data);
+                ctx.Todo.Remove(data);
                 await ctx.SaveChangesAsync();
 
                 return Ok("Berhasil menghapus data");

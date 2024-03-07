@@ -1,10 +1,12 @@
 using api_with_csharp.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 using Microsoft.Extensions.Configuration;
 using System.Runtime.CompilerServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
+ string conn = "Data Source=WIN-QQ6C7V0O4HI\\SQLEXPRESS;Initial Catalog=Kotlin;Integrated Security=True;Multiple Active Result Sets=True;Trust Server Certificate=True";
 
 // Add services to the container.
 
@@ -13,8 +15,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
-builder.Services.AddDbContext<UserContext>(opt=> opt.UseInMemoryDatabase("UserList"));
+builder.Services.AddDbContext<TodoContext>(opt => opt.UseSqlServer(conn,options => options.EnableRetryOnFailure()));
+builder.Services.AddDbContext<UserContext>(opt=> opt.UseSqlServer(conn,options => options.EnableRetryOnFailure()));
 
 var app = builder.Build();
 

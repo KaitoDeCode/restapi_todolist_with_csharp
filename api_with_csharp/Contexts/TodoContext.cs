@@ -8,6 +8,6 @@ namespace api_with_csharp.Contexts
         public TodoContext(DbContextOptions<TodoContext> options) : base(options) { 
         }
 
-        public DbSet<TodoModel> TodoModels { get; set; } = null;
+        public DbSet<TodoModel> Todo { get; set; } = null;
     }
 }

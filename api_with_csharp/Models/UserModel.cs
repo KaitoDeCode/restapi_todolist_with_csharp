@@ -1,5 +1,8 @@
-﻿namespace api_with_csharp.Models
+﻿using System.Linq;
+
+namespace api_with_csharp.Models
 {
+    
     public class UserModel
     {
         public int id { get; set; }

@@ -22,7 +22,7 @@ namespace api_with_csharp.Controllers
         [HttpPost("login",Name = "login")]
           public async Task<IActionResult> Login(String email, String password)
           {
-                var user = await ctx.UserModels.FirstOrDefaultAsync(item => item.email == email && item.password == password);
+                var user = await ctx.User.FirstOrDefaultAsync(item => item.email == email && item.password == password);
     
                 if (user == null)
                 {
@@ -35,7 +35,7 @@ namespace api_with_csharp.Controllers
         [HttpPost("register",Name = "register")]
         public async Task<IActionResult> register(UserModel model)
         {
-            ctx.UserModels.Add(model);
+            ctx.User.Add(model);
             await ctx.SaveChangesAsync();
             return CreatedAtAction("Register", new { id = model.id}, model);
         }
